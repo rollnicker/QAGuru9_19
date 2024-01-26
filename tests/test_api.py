@@ -7,10 +7,6 @@ from jsonschema import validate
 
 from utils import schemas_path
 
-'''
-"additionalProperties": false, - для схемы
-'''
-
 USERS_URL = "https://reqres.in/api/users"
 LOGIN_URL = "https://reqres.in/api/login"
 
@@ -39,7 +35,7 @@ def test_put_updated_job():
     assert job == response.json()["job"]
 
 
-def test_patch_uodated_job():
+def test_patch_updated_job():
     name = "morpheus"
     job = "zion resident"
     user = "/2"
@@ -118,7 +114,7 @@ def test_list_users_schema():
         validate(response.json(), schema=json.loads(file.read()))
 
 
-def test_user_schema():
+def test_user_schema_from_json_file():
     user_number = "/2"
 
     response = requests.get(
@@ -141,7 +137,7 @@ def test_user_schema_from_python_file():
 
 
 @pytest.mark.xfail(reason="Этот тест негативный")
-def test_patch_uodated_schema():
+def test_patch_updated_schema_with_no_additional_properties():
     name = "morpheus"
     job = "zion resident"
     user = "/2"
@@ -156,7 +152,7 @@ def test_patch_uodated_schema():
         validate(response.json(), schema=json.loads(file.read()))
 
 
-def test_list_users_per_page():
+def test_list_users_per_page_param():
     params = {"page": 2}
 
     response = requests.get(
