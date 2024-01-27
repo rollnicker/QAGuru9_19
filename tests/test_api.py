@@ -100,6 +100,7 @@ def test_users_not_found_404():
     )
 
     assert response.status_code == 404
+    assert response.json() == {}
 
 
 def test_list_users_schema():
@@ -136,6 +137,7 @@ def test_user_schema_from_python_file():
     validate(response.json(), schema=single_user)
 
 
+
 @pytest.mark.xfail(reason="Этот тест негативный")
 def test_patch_updated_schema_with_no_additional_properties():
     name = "morpheus"
@@ -163,6 +165,7 @@ def test_list_users_per_page_param():
     per_page_param = response.json()["per_page"]
     data_len = len(response.json()["data"])
     assert per_page_param == data_len
+    assert response.status_code == 200
 
 
 def test_no_data_on_empty_page():
